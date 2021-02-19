@@ -30,5 +30,16 @@ namespace SoochanaSeva_Api.Controllers.apiController
         {
             return await adBeneficiary.ListOfBeneficiaries(SoochnaPreneur, Beneficiary);
         }
+
+        [HttpPost]
+        public async Task<bool> SyncBeneficiary(IList<Beneficiary> Beneficiaries)
+        {
+            bool result = false;
+            if (Beneficiaries != null)
+            {
+                result = await adBeneficiary.SyncBeneficiary(Beneficiaries);
+            }
+            return result;
+        }
     }
 }

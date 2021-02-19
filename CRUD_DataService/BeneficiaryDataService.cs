@@ -15,7 +15,6 @@ namespace SoochanaSeva_DataService
         public async Task<IList<Beneficiary>> ListOfBeneficiaries(string SoochnaPreneur, int Beneficiary)
         {
             string spName = "GetBeneficiariesNew";
-            int i = 0;
 
             dbConnector objConn = new dbConnector();
             SqlConnection Conn = objConn.GetConnection;
@@ -99,6 +98,145 @@ namespace SoochanaSeva_DataService
                     }
                 }
             }
+        }
+
+        public async Task<bool> SyncBeneficiary(IList<Beneficiary> Beneficiaries)
+        {
+            bool result = true;
+            dbConnector objConn = new dbConnector();
+            SqlConnection Conn = objConn.GetConnection;
+            Conn.Open();
+            try
+            {
+                foreach (var Ben in Beneficiaries)
+                {
+
+                    if (Conn.State != System.Data.ConnectionState.Open)
+                        Conn.Open();
+
+                    string spName = "GetBeneficiaryById";
+
+                    if (Conn.State != System.Data.ConnectionState.Open)
+                        Conn.Open();
+
+
+                    SqlCommand objCommand = new SqlCommand(spName, Conn);
+                    objCommand.CommandType = CommandType.StoredProcedure;
+                    objCommand.Parameters.AddWithValue("@ID", Ben.Id);
+
+
+                    int count = Convert.ToInt32(await objCommand.ExecuteScalarAsync());
+                    if (count > 0)
+                        result = await UpdateBeneficiary(Ben);
+                    else
+                        result = await AddBeneficiary(Ben);
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+                throw;
+            }
+            finally
+            {
+
+            }
+            return result;
+        }
+
+        public async Task<bool> UpdateBeneficiary(Beneficiary Ben)
+        {
+            bool result = true;
+            dbConnector objConn = new dbConnector();
+            SqlConnection Conn = objConn.GetConnection;
+            Conn.Open();
+            try
+            {
+                //bool status = false;
+                //DBParameterCollection paramCollection = new DBParameterCollection();
+                string spName = "UpdateBeneficiaryNew";
+                if (Conn.State != System.Data.ConnectionState.Open)
+                    Conn.Open();
+
+
+                SqlCommand objCommand = new SqlCommand(spName, Conn);
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.Parameters.AddWithValue("@ID", Ben.Id);
+
+                objCommand.Parameters.AddWithValue("@BeneficiaryId ", Ben.Id);
+                objCommand.Parameters.AddWithValue("@Beneficiary ", Ben.ParentId);
+                objCommand.Parameters.AddWithValue("@FirstName", !string.IsNullOrEmpty(Ben.FirstName) ? Ben.FirstName : string.Empty);
+                objCommand.Parameters.AddWithValue("@LastName", !string.IsNullOrEmpty(Ben.LastName) ? Ben.LastName : string.Empty);
+                objCommand.Parameters.AddWithValue("@FathersName", !string.IsNullOrEmpty(Ben.FathersName) ? Ben.FathersName : string.Empty);
+                objCommand.Parameters.AddWithValue("@HusbandsName", !string.IsNullOrEmpty(Ben.HusbandsName) ? Ben.HusbandsName : string.Empty);
+                objCommand.Parameters.AddWithValue("@DOB", Convert.ToDateTime(Ben.DOB));
+                objCommand.Parameters.AddWithValue("@IDProof", Ben.IDProof);
+                objCommand.Parameters.AddWithValue("@IDDetails ", !string.IsNullOrEmpty(Ben.IDDetails) ? Ben.IDDetails : string.Empty);
+                objCommand.Parameters.AddWithValue("@State", Ben.State);
+                objCommand.Parameters.AddWithValue("@District", Ben.District);
+                objCommand.Parameters.AddWithValue("@Sex", Ben.Sex);
+                objCommand.Parameters.AddWithValue("@Age", Ben.Age);
+                objCommand.Parameters.AddWithValue("@Religion", Ben.Religion);
+                objCommand.Parameters.AddWithValue("@Socio", Ben.Socio);
+                objCommand.Parameters.AddWithValue("@Occupation", Ben.Occupation);
+                objCommand.Parameters.AddWithValue("@MaritalStatus ", Ben.MaritalStatus);
+                objCommand.Parameters.AddWithValue("@Category", Ben.Category);
+                objCommand.Parameters.AddWithValue("@Department", Ben.Department);
+                objCommand.Parameters.AddWithValue("@EmpStatus", Ben.EmploymentStatus);
+                objCommand.Parameters.AddWithValue("@VulGroup", Ben.VulGroup);
+                objCommand.Parameters.AddWithValue("@AnnualIncome", Ben.AnnualIncome);
+                objCommand.Parameters.AddWithValue("@Disability", Ben.Disabilty);
+                objCommand.Parameters.AddWithValue("@SoochnaPreneur ", Ben.SoochnaPreneur);
+                objCommand.Parameters.AddWithValue("@Photo", Ben.Photo);
+                objCommand.Parameters.AddWithValue("@Relationship", Ben.Relationship);
+                objCommand.Parameters.AddWithValue("@Sickness", Ben.Sickness);
+                objCommand.Parameters.AddWithValue("@Address", Ben.Address);
+                objCommand.Parameters.AddWithValue("@EMail", Ben.EMail);
+                objCommand.Parameters.AddWithValue("@Phone", Ben.Phone);
+                objCommand.Parameters.AddWithValue("@PercentageDisability", Ben.PercentageDisablity);
+                objCommand.Parameters.AddWithValue("@Qualification", Ben.Qualification);
+                objCommand.Parameters.AddWithValue("@Block", Ben.Block);
+                objCommand.Parameters.AddWithValue("@Village", Ben.Village);
+                objCommand.Parameters.AddWithValue("@Panchayat", Ben.Panchayat);
+
+                int count = Convert.ToInt32(await objCommand.ExecuteScalarAsync());
+
+                if (count == 2)
+                {
+                    result = true;
+                }
+                else if (count == 0)
+                {
+                    result = true;
+                }
+
+                else
+                {
+                    result = false;
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                result = false;
+
+            }
+            finally
+            {
+                if (Conn != null)
+                {
+                    if (Conn.State == ConnectionState.Open)
+                    {
+                        Conn.Close();
+                        Conn.Dispose();
+                    }
+                }
+            }
+
+            return result;
         }
 
         public async Task<bool> AddBeneficiary(Beneficiary Beneficiary)
