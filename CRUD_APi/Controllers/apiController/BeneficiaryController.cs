@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -25,9 +26,9 @@ namespace SoochanaSeva_Api.Controllers.apiController
 
         }
 
-        public IList<Beneficiary> GetBeneficiaries(string SoochnaPreneur, int Beneficiary)
+        public async Task<IList<Beneficiary>> GetBeneficiaries(string SoochnaPreneur, int Beneficiary)
         {
-            return adBeneficiary.ListOfBeneficiaries(SoochnaPreneur, Beneficiary);
+            return await adBeneficiary.ListOfBeneficiaries(SoochnaPreneur, Beneficiary);
         }
     }
 }

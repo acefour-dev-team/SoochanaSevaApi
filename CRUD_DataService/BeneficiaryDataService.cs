@@ -12,7 +12,7 @@ namespace SoochanaSeva_DataService
     // Database Service
     public class BeneficiaryDataService
     {
-        public IList<Beneficiary> ListOfBeneficiaries(string SoochnaPreneur, int Beneficiary)
+        public async Task<IList<Beneficiary>> ListOfBeneficiaries(string SoochnaPreneur, int Beneficiary)
         {
             string spName = "GetBeneficiariesNew";
             int i = 0;
@@ -33,7 +33,7 @@ namespace SoochanaSeva_DataService
                 objCommand.Parameters.AddWithValue("@SoochnaPreneur", SoochnaPreneur);
                 objCommand.Parameters.AddWithValue("@Beneficiary", Beneficiary);
 
-                SqlDataReader _Reader = objCommand.ExecuteReader();
+                SqlDataReader _Reader = await objCommand.ExecuteReaderAsync();
                 while (_Reader.Read())
                 {
                     getBeneficiary.Add(new Beneficiary
