@@ -14,7 +14,7 @@ namespace SoochanaSeva_DataService
     {
         public IList<Beneficiary> ListOfBeneficiaries(string SoochnaPreneur, int Beneficiary)
         {
-            string spName = "GetBeneficiaries";
+            string spName = "GetBeneficiariesNew";
             int i = 0;
 
             dbConnector objConn = new dbConnector();
@@ -115,7 +115,7 @@ namespace SoochanaSeva_DataService
                 if (Conn.State != System.Data.ConnectionState.Open)
                     Conn.Open();
 
-                SqlCommand objCommand = new SqlCommand("AddBeneficiary", Conn);
+                SqlCommand objCommand = new SqlCommand("AddBeneficiaryNew", Conn);
                 objCommand.CommandType = CommandType.StoredProcedure;
                 objCommand.Parameters.AddWithValue("@BeneficiaryId", Beneficiary.Id);
                 objCommand.Parameters.AddWithValue("@Beneficiary ", Beneficiary.ParentId);
