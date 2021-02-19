@@ -18,10 +18,10 @@ namespace SoochanaSeva_Api.Controllers.apiController
         BeneficiaryDataService adBeneficiary = new BeneficiaryDataService();
 
         [HttpPost]
-        public bool AddBeneficiary(Beneficiary Beneficiary)
+        public async Task<bool> AddBeneficiary(Beneficiary Beneficiary)
         {
             bool result = false;
-            result = adBeneficiary.AddBeneficiary(Beneficiary);
+            result = await adBeneficiary.AddBeneficiary(Beneficiary);
             return result;
 
         }

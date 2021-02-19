@@ -101,7 +101,7 @@ namespace SoochanaSeva_DataService
             }
         }
 
-        public bool AddBeneficiary(Beneficiary Beneficiary)
+        public async Task<bool> AddBeneficiary(Beneficiary Beneficiary)
         {
             dbConnector objConn = new dbConnector();
             SqlConnection Conn = objConn.GetConnection;
@@ -158,7 +158,7 @@ namespace SoochanaSeva_DataService
                 else
                     objCommand.Parameters.AddWithValue("@DateOfRegistration", DBNull.Value);
 
-                result = Convert.ToInt32(objCommand.ExecuteScalar());
+                result = Convert.ToInt32(await objCommand.ExecuteScalarAsync());
 
                 if (result > 0)
                 {
