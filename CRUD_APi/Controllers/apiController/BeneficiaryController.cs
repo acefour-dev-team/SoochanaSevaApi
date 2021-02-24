@@ -41,5 +41,10 @@ namespace SoochanaSeva_Api.Controllers.apiController
             }
             return result;
         }
+
+        public async Task<IList<Beneficiary>> GetSubBeneficiaries(string SoochnaPreneur)
+        {
+            return await adBeneficiary.ListOfSubBeneficiaries(SoochnaPreneur);
+        }
     }
 }

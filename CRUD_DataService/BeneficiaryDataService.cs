@@ -100,6 +100,11 @@ namespace SoochanaSeva_DataService
             }
         }
 
+        public async Task<IList<Beneficiary>> ListOfSubBeneficiaries(string soochnaPreneur)
+        {
+            return await ListOfBeneficiaries(soochnaPreneur, 0);
+        }
+
         public async Task<bool> SyncBeneficiary(IList<Beneficiary> Beneficiaries)
         {
             bool result = true;
