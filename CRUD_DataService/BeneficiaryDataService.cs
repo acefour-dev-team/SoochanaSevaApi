@@ -100,9 +100,92 @@ namespace SoochanaSeva_DataService
             }
         }
 
-        public async Task<IList<Beneficiary>> ListOfSubBeneficiaries(string soochnaPreneur)
+        public async Task<IList<Beneficiary>> ListOfSubBeneficiaries(string SoochnaPreneur)
         {
-            return await ListOfBeneficiaries(soochnaPreneur, 0);
+            string spName = "GetSubBeneficiariesNew";
+
+            dbConnector objConn = new dbConnector();
+            SqlConnection Conn = objConn.GetConnection;
+            Conn.Open();
+            List<Beneficiary> getSubBeneficiary = new List<Beneficiary>();
+            try
+            {
+               
+
+                if (Conn.State != System.Data.ConnectionState.Open)
+                    Conn.Open();
+
+                SqlCommand objCommand = new SqlCommand(spName, Conn);
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.Parameters.AddWithValue("@SoochnaPreneur", SoochnaPreneur);
+
+                SqlDataReader _Reader = await objCommand.ExecuteReaderAsync();
+                while (_Reader.Read())
+                {
+                    getSubBeneficiary.Add(new Beneficiary
+                    {
+                     
+                        Id = Convert.ToInt64(_Reader["Id"]),
+                        ParentId = Convert.ToInt64(_Reader["Beneficiary"]),
+                        FirstName = _Reader["FirstName"].ToString(),
+                        LastName = _Reader["LastName"].ToString(),
+                        FathersName = _Reader["FathersName"].ToString(),
+                        HusbandsName = _Reader["HusbandsName"].ToString(),
+                        //DateOfBirth = (_Reader["DateOfBirth"] != DBNull.Value && !_Reader["DateOfBirth"].ToString().Contains("1/1/0001")) ? _Reader["DateOfBirth"].ToString() : string.Empty,
+                        DOB = _Reader["DOB"] != DBNull.Value && _Reader["DOB"].ToString() != string.Empty ? Convert.ToDateTime(_Reader["DOB"].ToString()) : (DateTime?)null,
+                        IDProof = Convert.ToInt64(_Reader["IDProof"] != DBNull.Value ? Convert.ToInt64(_Reader["IDProof"]) : 0),
+                        IDDetails = _Reader["IDDetails"].ToString(),
+                        State = Convert.ToInt64(_Reader["State"]),
+                        District = Convert.ToInt64(_Reader["District"]),
+                        EngDistrictId = _Reader["EngDistrictId"] != DBNull.Value && _Reader["EngDistrictId"] != "" ? Convert.ToInt64(_Reader["EngDistrictId"]) : 0,
+
+                        Sex = Convert.ToInt64(_Reader["Sex"] != DBNull.Value ? Convert.ToInt64(_Reader["Sex"]) : 0),
+                        Age = Convert.ToInt64(_Reader["Age"] != DBNull.Value ? Convert.ToInt64(_Reader["Age"]) : 0),
+                        Religion = Convert.ToInt64(_Reader["Religion"] != DBNull.Value ? Convert.ToInt64(_Reader["Religion"]) : 0),
+                        Department = Convert.ToInt64(_Reader["Department"] != DBNull.Value ? Convert.ToInt64(_Reader["Department"]) : 0),
+                        EmploymentStatus = Convert.ToInt64(_Reader["EmpStatus"] != DBNull.Value ? Convert.ToInt64(_Reader["EmpStatus"]) : 0),
+                        VulGroup = Convert.ToInt64(_Reader["VulGroup"] != DBNull.Value ? Convert.ToInt64(_Reader["VulGroup"]) : 0),
+                        AnnualIncome = Convert.ToDouble(_Reader["AnnualIncome"] != DBNull.Value ? Convert.ToInt64(_Reader["AnnualIncome"]) : 0),
+                        Disabilty = Convert.ToInt64(_Reader["Disablity"] != DBNull.Value ? Convert.ToInt64(_Reader["Disablity"]) : 0),
+                        Photo = _Reader["Photo"].ToString(),
+                        SoochnaPreneur = SoochnaPreneur,
+                        Relationship = Convert.ToInt64(_Reader["Relationship"] != DBNull.Value ? Convert.ToInt64(_Reader["Relationship"]) : 0),
+                        Sickness = Convert.ToInt64(_Reader["Sickness"] != DBNull.Value ? Convert.ToInt64(_Reader["Sickness"]) : 0),
+                        Occupation = Convert.ToInt64(_Reader["Occupation"] != DBNull.Value ? Convert.ToInt64(_Reader["Occupation"]) : 0),
+                        BeneficiaryId = Convert.ToInt64(_Reader["Beneficiary"] != DBNull.Value ? Convert.ToInt64(_Reader["Beneficiary"]) : 0),
+                        PercentageDisablity = _Reader["PercentageDisability"] != DBNull.Value ? Convert.ToInt64(_Reader["PercentageDisability"]) : 0,
+                        Address = _Reader["Address"].ToString(),
+                        EMail = _Reader["EMail"].ToString(),
+                        Phone = _Reader["Phone"].ToString(),
+                        Qualification = _Reader["Qualification"].ToString(),
+                        DateOfRegistration = _Reader["DateOfRegistration"] != DBNull.Value && _Reader["DateOfRegistration"] != "" ? Convert.ToDateTime(_Reader["DateOfRegistration"].ToString()) : (DateTime?)null,
+                        Socio = Convert.ToInt64(_Reader["Socio"] != DBNull.Value ? Convert.ToInt64(_Reader["Socio"]) : 0),
+                        MaritalStatus = Convert.ToInt64(_Reader["MaritulStatus"] != DBNull.Value ? Convert.ToInt64(_Reader["MaritulStatus"]) : 0),
+                        Category = Convert.ToInt64(_Reader["Category"] != DBNull.Value ? Convert.ToInt64(_Reader["Category"]) : 0),
+                        Block = _Reader["Block"].ToString(),
+                        Village = _Reader["Village"].ToString(),
+                        Panchayat = _Reader["Panchayat"].ToString()
+                    
+                     });
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                if (Conn != null)
+                {
+                    if (Conn.State == ConnectionState.Open)
+                    {
+                        Conn.Close();
+                        Conn.Dispose();
+                    }
+                }
+            }
+            
+            return getSubBeneficiary;
         }
 
         public async Task<bool> SyncBeneficiary(IList<Beneficiary> Beneficiaries)
