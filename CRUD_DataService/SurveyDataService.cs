@@ -74,20 +74,20 @@ namespace SoochanaSeva_DataService
                         Id = Convert.ToInt32(_Reader["Id"]),
                         SurveyId = Convert.ToInt32(_Reader["SurveyId"]),
                         SurveyDataId = _Reader["SurveyDataId"].ToString(),
-                        BeneficiaryId = Convert.ToInt32(_Reader["SurveyDetailsData"]),
-                        SoochnaPrenuer = _Reader["SurveyDetailsData"].ToString(),
-                        Latitude = _Reader["SurveyDetailsData"].ToString(),
-                        Longitude = _Reader["SurveyDetailsData"].ToString(),
-                        Timestamp = _Reader["SurveyDetailsData"].ToString()
+                        BeneficiaryId = Convert.ToInt32(_Reader["BeneficiaryId"]),
+                        SoochnaPrenuer = _Reader["SoochnaPrenuer"].ToString(),
+                        Latitude = _Reader["Latitude"].ToString(),
+                        Longitude = _Reader["Longitude"].ToString(),
+                        Timestamp = _Reader["Timestamp"].ToString()
 
                     });
 
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
-
+                throw ex;
             }
             finally
             {
@@ -178,9 +178,9 @@ namespace SoochanaSeva_DataService
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             finally
             {
