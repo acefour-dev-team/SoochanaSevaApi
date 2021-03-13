@@ -53,6 +53,63 @@ namespace SoochanaSeva_DataService
             return retResult;
         }
 
+        public async Task<IList<SurveyDetail>> GetAllSurveyDetails(string username)
+        {
+            string spName = "GetSurveyDetails_NewAPI";
+
+            dbConnector objConn = new dbConnector();
+            SqlConnection Conn = objConn.GetConnection;
+            List<SurveyDetail> getSurveyDetails = new List<SurveyDetail>();
+            Conn.Open();
+            try
+            {
+                SqlCommand objCommand = new SqlCommand(spName, Conn);
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.Parameters.AddWithValue("@Soochnapreneur", username);
+                SqlDataReader _Reader = await objCommand.ExecuteReaderAsync();
+                while (_Reader.Read())
+                {
+                    getSurveyDetails.Add(new SurveyDetail
+                    {
+                        Id = Convert.ToInt32(_Reader["Id"]),
+                        SurveyId = Convert.ToInt32(_Reader["SurveyId"]),
+                        Question = _Reader["Question"].ToString(),
+                        InputTypes = _Reader["InputTypes"].ToString(),
+                        HasSubQuestion = Convert.ToBoolean(_Reader["HasSubQuestion"]),
+                        SectionId = Convert.ToInt32(_Reader["SectionId"]),
+                        Condition = _Reader["Condition"].ToString(),
+                        ValidationMessage = _Reader["ValidationMessage"].ToString(),
+                        isMandatory = Convert.ToBoolean(_Reader["isMandatory"]),
+                        isAvailable = Convert.ToBoolean(_Reader["isAvailable"]),
+                        isSearchable = Convert.ToBoolean(_Reader["isSearchable"]),
+                        SelectValues = _Reader["SelectValues"].ToString(),
+                        LangId = Convert.ToInt32(_Reader["LangId"]),
+                        LinkQuestion = Convert.ToInt32(_Reader["LinkQuestion"]),
+                        ClientId = _Reader["ClientId"].ToString(),
+                        Size = Convert.ToInt32(_Reader["Size"])
+                    });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (Conn != null)
+                {
+                    if (Conn.State == ConnectionState.Open)
+                    {
+                        Conn.Close();
+                        Conn.Dispose();
+                    }
+                }
+            }
+            return getSurveyData;
+        }
+
         public async Task<IList<SurveyData>> GetSurveyData(string username)
         {
             string spName = "GetSurveyData_NewAPI";
@@ -85,7 +142,7 @@ namespace SoochanaSeva_DataService
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
