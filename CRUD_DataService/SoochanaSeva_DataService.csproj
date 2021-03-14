@@ -45,6 +45,7 @@
     <Compile Include="CrudDataService.cs" />
     <Compile Include="dbConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncDataService.cs" />
     <Compile Include="SurveyDataService.cs" />
   </ItemGroup>
   <ItemGroup>

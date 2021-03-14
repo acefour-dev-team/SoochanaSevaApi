@@ -56,7 +56,8 @@
     <Compile Include="SurveyData.cs" />
     <Compile Include="SurveyDataDetail.cs" />
     <Compile Include="SurveyDetail.cs" />
-	<Compile Include="SurveySection.cs" />
+    <Compile Include="SurveySection.cs" />
+    <Compile Include="Sync.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
