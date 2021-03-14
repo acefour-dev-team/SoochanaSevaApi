@@ -44,8 +44,15 @@ namespace SoochanaSeva_Api.Controllers.apiController
         [HttpGet]
         public async Task<IList<SurveyDetail>> GetAllSurveyDetails(string username)
         {
-            var returnValue = await adSurvey.GetAllSurveyDetails(username);
+            var returnValue = await adSurvey.GetSurveyDetails(username);
             return returnValue;
+        }
+        [HttpGet]
+        public async Task<IList<SurveySection>> GetAllSurveySections(string username)
+        {
+            var returnValue = await adSurvey.GetSurveySections(username);
+            return returnValue;
+          
         }
     }
 }

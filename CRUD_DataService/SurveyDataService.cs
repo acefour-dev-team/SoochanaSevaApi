@@ -53,7 +53,52 @@ namespace SoochanaSeva_DataService
             return retResult;
         }
 
-        public async Task<IList<SurveyDetail>> GetAllSurveyDetails(string username)
+        public async Task<IList<SurveySection>> GetSurveySections(string username)
+        {
+            string spName = "GetSurveySections_NewAPI";
+
+            dbConnector objConn = new dbConnector();
+            SqlConnection Conn = objConn.GetConnection;
+            List<SurveySection> getSurveySections = new List<SurveySection>();
+            Conn.Open();
+            try
+            {
+                SqlCommand objCommand = new SqlCommand(spName, Conn);
+                objCommand.CommandType = CommandType.StoredProcedure;
+                objCommand.Parameters.AddWithValue("@Soochnapreneur", username);
+                SqlDataReader _Reader = await objCommand.ExecuteReaderAsync();
+                while (_Reader.Read())
+                {
+                    getSurveySections.Add(new SurveySection
+                    {
+                        Id = Convert.ToInt32(_Reader["Id"]),
+                        SurveyId = Convert.ToInt32(_Reader["SurveyId"]),
+                        SectionHeader = _Reader["SectionHeader"].ToString(),
+                        IsAvailable = Convert.ToBoolean(_Reader["IsAvailable"]),
+                        ClientId = Convert.ToInt32(_Reader["ClientId"]),
+                        SectionId = Convert.ToInt16(_Reader["SectionId"])
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (Conn != null)
+                {
+                    if (Conn.State == ConnectionState.Open)
+                    {
+                        Conn.Close();
+                        Conn.Dispose();
+                    }
+                }
+            }
+            return getSurveySections;
+        } 
+        public async Task<IList<SurveyDetail>> GetSurveyDetails(string username)
         {
             string spName = "GetSurveyDetails_NewAPI";
 
@@ -107,7 +152,7 @@ namespace SoochanaSeva_DataService
                     }
                 }
             }
-            return getSurveyData;
+            return getSurveyDetails;
         }
 
         public async Task<IList<SurveyData>> GetSurveyData(string username)
