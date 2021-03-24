@@ -51,29 +51,29 @@ namespace SoochanaSeva_DataService
                         District = Convert.ToInt64(_Reader["District"]),
                         EngDistrictId = _Reader["EngDistrictId"] != DBNull.Value && _Reader["EngDistrictId"] != "" ? Convert.ToInt64(_Reader["EngDistrictId"]) : 0,
 
-                        Sex = Convert.ToInt64(_Reader["Sex"] != DBNull.Value ? Convert.ToInt64(_Reader["Sex"]) : 0),
-                        Age = Convert.ToInt64(_Reader["Age"] != DBNull.Value ? Convert.ToInt64(_Reader["Age"]) : 0),
-                        Religion = Convert.ToInt64(_Reader["Religion"] != DBNull.Value ? Convert.ToInt64(_Reader["Religion"]) : 0),
-                        Department = Convert.ToInt64(_Reader["Department"] != DBNull.Value ? Convert.ToInt64(_Reader["Department"]) : 0),
-                        EmploymentStatus = Convert.ToInt64(_Reader["EmpStatus"] != DBNull.Value ? Convert.ToInt64(_Reader["EmpStatus"]) : 0),
-                        VulGroup = Convert.ToInt64(_Reader["VulGroup"] != DBNull.Value ? Convert.ToInt64(_Reader["VulGroup"]) : 0),
-                        AnnualIncome = Convert.ToDouble(_Reader["AnnualIncome"] != DBNull.Value ? Convert.ToInt64(_Reader["AnnualIncome"]) : 0),
-                        Disabilty = Convert.ToInt64(_Reader["Disablity"] != DBNull.Value ? Convert.ToInt64(_Reader["Disablity"]) : 0),
+                        Sex = Convert.ToInt16(_Reader["Sex"] != DBNull.Value ? _Reader["Sex"] : 0),
+                        Age = Convert.ToInt16(_Reader["Age"] != DBNull.Value ? _Reader["Age"] : 0),
+                        Religion = Convert.ToInt16(_Reader["Religion"] != DBNull.Value ? _Reader["Religion"] : 0),
+                        Department = Convert.ToInt16(_Reader["Department"] != DBNull.Value ? _Reader["Department"] : 0),
+                        EmploymentStatus = Convert.ToInt16(_Reader["EmpStatus"] != DBNull.Value ? _Reader["EmpStatus"] : 0),
+                        VulGroup = Convert.ToInt16(_Reader["VulGroup"] != DBNull.Value ? _Reader["VulGroup"] : 0),
+                        AnnualIncome = Convert.ToDouble(_Reader["AnnualIncome"] != DBNull.Value ? _Reader["AnnualIncome"] : 0),
+                        Disabilty = Convert.ToInt16(_Reader["Disablity"] != DBNull.Value ? _Reader["Disablity"] : 0),
                         Photo = _Reader["Photo"].ToString(),
                         SoochnaPreneur = SoochnaPreneur,
-                        Relationship = Convert.ToInt64(_Reader["Relationship"] != DBNull.Value ? Convert.ToInt64(_Reader["Relationship"]) : 0),
-                        Sickness = Convert.ToInt64(_Reader["Sickness"] != DBNull.Value ? Convert.ToInt64(_Reader["Sickness"]) : 0),
-                        Occupation = Convert.ToInt64(_Reader["Occupation"] != DBNull.Value ? Convert.ToInt64(_Reader["Occupation"]) : 0),
-                        BeneficiaryId = Convert.ToInt64(_Reader["Beneficiary"] != DBNull.Value ? Convert.ToInt64(_Reader["Beneficiary"]) : 0),
+                        Relationship = Convert.ToInt16(_Reader["Relationship"] != DBNull.Value ? _Reader["Relationship"] : 0),
+                        Sickness = Convert.ToInt16(_Reader["Sickness"] != DBNull.Value ? _Reader["Sickness"] : 0),
+                        Occupation = Convert.ToInt16(_Reader["Occupation"] != DBNull.Value ? _Reader["Occupation"] : 0),
+                        BeneficiaryId = Convert.ToInt16(_Reader["Beneficiary"] != DBNull.Value ? _Reader["Beneficiary"] : 0),
                         PercentageDisablity = _Reader["PercentageDisability"] != DBNull.Value ? Convert.ToInt64(_Reader["PercentageDisability"]) : 0,
                         Address = _Reader["Address"].ToString(),
                         EMail = _Reader["EMail"].ToString(),
                         Phone = _Reader["Phone"].ToString(),
                         Qualification = _Reader["Qualification"].ToString(),
-                        DateOfRegistration = _Reader["DateOfRegistration"] != DBNull.Value && _Reader["DateOfRegistration"] != "" ? Convert.ToDateTime(_Reader["DateOfRegistration"].ToString()) : (DateTime?)null,
-                        Socio = Convert.ToInt64(_Reader["Socio"] != DBNull.Value ? Convert.ToInt64(_Reader["Socio"]) : 0),
-                        MaritalStatus = Convert.ToInt64(_Reader["MaritulStatus"] != DBNull.Value ? Convert.ToInt64(_Reader["MaritulStatus"]) : 0),
-                        Category = Convert.ToInt64(_Reader["Category"] != DBNull.Value ? Convert.ToInt64(_Reader["Category"]) : 0),
+                        DateOfRegistration = _Reader["DateOfRegistration"] != DBNull.Value && _Reader["DateOfRegistration"].ToString() != string.Empty ? Convert.ToDateTime(_Reader["DateOfRegistration"].ToString()) : (DateTime?)null,
+                        Socio = Convert.ToInt16(_Reader["Socio"] != DBNull.Value ? _Reader["Socio"] : 0),
+                        MaritalStatus = Convert.ToInt16(_Reader["MaritulStatus"] != DBNull.Value ? _Reader["MaritulStatus"] : 0),
+                        Category = Convert.ToInt16(_Reader["Category"] != DBNull.Value ? _Reader["Category"] : 0),
                         Block = _Reader["Block"].ToString(),
                         Village = _Reader["Village"].ToString(),
                         Panchayat = _Reader["Panchayat"].ToString()
@@ -83,9 +83,9 @@ namespace SoochanaSeva_DataService
 
                 return getBeneficiary;
             }
-            catch
+            catch(Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
