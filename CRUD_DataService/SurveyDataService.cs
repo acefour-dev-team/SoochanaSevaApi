@@ -224,7 +224,7 @@ namespace SoochanaSeva_DataService
                     objCommand.Parameters.AddWithValue("@SurveyDetailsData", sData.SurveyDetailsData);
                     objCommand.Parameters.AddWithValue("@InputType", sData.InputType);
                     objCommand.Parameters.AddWithValue("@SurveyId", sData.SurveyId);
-                    objCommand.Parameters.AddWithValue("@SurveyDataId_FK", sData.SurveyDataIdFK);
+                    objCommand.Parameters.AddWithValue("@SurveyDataId_FK", sData.SurveyDataFK);
 
                     await (objCommand.ExecuteNonQueryAsync());
                 }

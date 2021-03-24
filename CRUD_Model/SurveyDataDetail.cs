@@ -15,5 +15,6 @@ namespace SoochanaSeva_Model
         public string SurveyDetailsData { get; set; }
         public string InputType { get; set; }
         public Int64 SurveyDataIdFK { get; set; }
+        public Int64 SurveyDataFK { get; set; }
     }
 }
