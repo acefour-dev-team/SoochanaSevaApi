@@ -217,6 +217,7 @@
     <Compile Include="Controllers\apiController\DefaultController.cs" />
     <Compile Include="Controllers\apiController\SurveyController.cs" />
     <Compile Include="Controllers\apiController\SyncController.cs" />
+    <Compile Include="Controllers\apiController\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

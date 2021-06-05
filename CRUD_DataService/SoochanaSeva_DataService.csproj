@@ -47,12 +47,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyncDataService.cs" />
     <Compile Include="SurveyDataService.cs" />
+    <Compile Include="UserDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRUD_Model\SoochanaSeva_Model.csproj">
       <Project>{e9220b44-70bc-4a47-9a12-ae8f9d432448}</Project>
       <Name>SoochanaSeva_Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="StoredProc\AddBeneficiary_LC.sql" />
+    <Content Include="StoredProc\GetDEFSoochnaPreneur.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

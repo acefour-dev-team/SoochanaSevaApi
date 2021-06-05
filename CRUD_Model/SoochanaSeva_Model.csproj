@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Beneficiary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SoochnaPreneur.cs" />
     <Compile Include="SurveyData.cs" />
     <Compile Include="SurveyDataDetail.cs" />
     <Compile Include="SurveyDetail.cs" />
